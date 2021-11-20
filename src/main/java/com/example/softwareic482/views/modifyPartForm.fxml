@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.softwareic482.controller.ModifyPartController">
+    <children>
+        <FlowPane alignment="CENTER_LEFT" hgap="30.0" layoutX="42.0" layoutY="38.0" prefHeight="39.0" prefWidth="415.0">
+            <children>
+                <Label prefHeight="18.0" prefWidth="76.0" text="Modify Part">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="138.0" text="In-House" />
+                <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="138.0" text="Outsourced" />
+            </children>
+        </FlowPane>
+        <VBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="77.0" prefHeight="363.0" prefWidth="465.0">
+            <children>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="70.0" text="ID" />
+                        <TextField editable="false" promptText="Auo Gen - Disabled" />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="70.0" text="Name" />
+                        <TextField />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="70.0" text="Inv" />
+                        <TextField />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="70.0" text="Price/Cost" />
+                        <TextField />
+                    </children>
+                </FlowPane>
+                <FlowPane prefHeight="39.0" prefWidth="396.0">
+                    <children>
+                        <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="242.0">
+                            <children>
+                                <Label prefHeight="17.0" prefWidth="70.0" text="Max" />
+                                <TextField />
+                            </children>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="209.0">
+                            <children>
+                                <Label prefHeight="17.0" prefWidth="40.0" text="Min" />
+                                <TextField />
+                            </children>
+                        </FlowPane>
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="70.0" text="Machine ID" />
+                        <TextField />
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="BOTTOM_RIGHT" hgap="20.0" prefHeight="32.0" prefWidth="241.0">
+                    <children>
+                        <Button mnemonicParsing="false" text="Save" />
+                        <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                    </children>
+                    <VBox.margin>
+                        <Insets right="50.0" top="30.0" />
+                    </VBox.margin>
+                </FlowPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
