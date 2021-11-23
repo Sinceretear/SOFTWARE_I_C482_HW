@@ -1,6 +1,6 @@
 package com.example.softwareic482;
 
-import com.example.softwareic482.model.Navigation;
+import com.example.softwareic482.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -37,6 +40,34 @@ public class HelloController implements Initializable {
     private Button exit;
     @FXML
     private Navigation nav = new Navigation();
+
+    @FXML
+    private TableView<Part> PartTableView;
+    @FXML
+    private TableColumn<Part, Integer> partID;
+    @FXML
+    private TableColumn<Part, String> partName;
+    @FXML
+    private TableColumn<Part, Integer> inventoryLevel;
+    @FXML
+    private TableColumn<Part, Double> pricePerUnit;
+
+    @FXML
+    private TableView<Product> ProductTableView;
+    @FXML
+    private TableColumn<Product,Integer> productID;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        PartTableView.setItems(Inventory.getAllParts());
+        partID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        pricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        ProductTableView.setItems(Inventory.getAllProducts());
+
+    }
 
     public HelloController() {
     }
@@ -77,8 +108,6 @@ public class HelloController implements Initializable {
         System.exit(0);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+
 
 }
