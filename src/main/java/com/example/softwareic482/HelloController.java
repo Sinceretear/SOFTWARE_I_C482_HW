@@ -56,6 +56,12 @@ public class HelloController implements Initializable {
     private TableView<Product> ProductTableView;
     @FXML
     private TableColumn<Product,Integer> productID;
+    @FXML
+    private TableColumn<Part, String> productName;
+    @FXML
+    private TableColumn<Part, Integer> productInventoryLevel;
+    @FXML
+    private TableColumn<Part, Double> productPricePerUnit;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,7 +72,10 @@ public class HelloController implements Initializable {
         pricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         ProductTableView.setItems(Inventory.getAllProducts());
-
+        productID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public HelloController() {

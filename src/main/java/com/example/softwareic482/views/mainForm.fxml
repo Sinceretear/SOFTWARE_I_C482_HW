@@ -48,10 +48,10 @@
             </FlowPane>
             <TableView fx:id="ProductTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="472.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Product ID" />
-                  <TableColumn prefWidth="100.0" text="Product Name" />
-                  <TableColumn prefWidth="117.0" text="Inventory Level" />
-                  <TableColumn prefWidth="178.0" text="Price/ Cost per Unit" />
+                  <TableColumn fx:id="productID" prefWidth="75.0" text="Product ID" />
+                  <TableColumn fx:id="productName" prefWidth="100.0" text="Product Name" />
+                  <TableColumn fx:id="productInventoryLevel" prefWidth="117.0" text="Inventory Level" />
+                  <TableColumn fx:id="productPricePerUnit" prefWidth="178.0" text="Price/ Cost per Unit" />
                </columns>
             </TableView>
             <Label layoutX="21.0" layoutY="17.0" prefHeight="25.0" prefWidth="82.0" text="Products" />
