@@ -1,5 +1,6 @@
 package com.example.softwareic482;
 
+import com.example.softwareic482.controller.ModifyPartController;
 import com.example.softwareic482.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +24,9 @@ import java.util.ResourceBundle;
 
 
 public class HelloController implements Initializable {
+
+
+    private static Part partToModify;
 
     @FXML
     private Button addPartButton;
@@ -87,10 +91,14 @@ public class HelloController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/addpartF.fxml", event);
     }
 
+
     @FXML
     protected void modifyPartClicked(ActionEvent event) throws IOException {
-        nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
+        Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
+
+        //nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
     }
+
 
     @FXML
     protected void deletePartClicked() {
