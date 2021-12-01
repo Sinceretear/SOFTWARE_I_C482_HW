@@ -53,14 +53,14 @@
                     <children>
                         <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="242.0">
                             <children>
-                                <Label prefHeight="17.0" prefWidth="70.0" text="Max" />
-                                <TextField fx:id="partMax" />
+                                <Label prefHeight="17.0" prefWidth="70.0" text="Min" />
+                                <TextField fx:id="partMin" />
                             </children>
                         </FlowPane>
                         <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="209.0">
                             <children>
-                                <Label prefHeight="17.0" prefWidth="40.0" text="Min" />
-                                <TextField fx:id="partMin" />
+                                <Label prefHeight="17.0" prefWidth="40.0" text="Max" />
+                                <TextField fx:id="partMax" />
                             </children>
                         </FlowPane>
                     </children>

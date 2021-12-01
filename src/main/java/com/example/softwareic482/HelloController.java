@@ -95,14 +95,13 @@ public class HelloController implements Initializable {
     @FXML
     protected void modifyPartClicked(ActionEvent event) throws IOException {
         Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
-
-        //nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
+        nav.goToModifyPartController(selectedPart,"src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
     }
 
 
     @FXML
     protected void deletePartClicked() {
-        deletePartButton.setText("Fuckd");
+        PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -117,7 +116,7 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void deleteProductClicked() {
-        deleteProductButton.setText("Fuckd");
+        ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
     }
 
     @FXML

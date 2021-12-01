@@ -1,6 +1,7 @@
 package com.example.softwareic482.controller;
 
 import com.example.softwareic482.model.Navigation;
+import com.example.softwareic482.model.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,11 @@ public class ModifyProductController implements Initializable {
     public ModifyProductController() {
     }
 
+
+    @FXML
+    public void setItems(Part part) {
+        System.out.println("set items in modify product");
+    }
 
     @FXML
     protected void cancel(ActionEvent event) throws IOException {

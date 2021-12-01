@@ -2,6 +2,7 @@ package com.example.softwareic482.controller;
 
 import com.example.softwareic482.HelloController;
 import com.example.softwareic482.model.InHouse;
+import com.example.softwareic482.model.Outsourced;
 import com.example.softwareic482.model.Navigation;
 import com.example.softwareic482.model.Part;
 import javafx.event.ActionEvent;
@@ -58,8 +59,24 @@ public class ModifyPartController implements Initializable {
     }
 
     @FXML
-    public void sendPart(Part part) {
-        partName.setText(InHouse.class.getName());
+    public void setItems(Part part) {
+        if (part instanceof InHouse) {
+            partInHouse.setSelected(true);
+            machineOrCompany.setText("Machine ID");
+            partMachineID.setText(((InHouse) part).getMachineId());
+        }
+        if (part instanceof Outsourced) {
+            partOutsourced.setSelected(true);
+            machineOrCompany.setText("Company Name");
+            partMachineID.setText(((Outsourced) part).getCompanyName());
+        }
+
+        partName.setText(part.getName());
+        partID.setText(part.getId());
+        partInv.setText(part.getStock());
+        partPrice.setText(part.getPrice());
+        partMin.setText(part.getMin());
+        partMax.setText(part.getMax());
     }
 
     @FXML

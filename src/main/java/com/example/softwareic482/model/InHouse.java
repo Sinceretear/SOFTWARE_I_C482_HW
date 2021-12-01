@@ -13,8 +13,8 @@ public class InHouse extends Part {
         this.machineId = machineId;
     }
 
-    public int getMachineId() {
-        return machineId;
+    public String getMachineId() {
+        return String.valueOf(machineId);
     }
 
 }
