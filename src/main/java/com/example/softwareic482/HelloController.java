@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -22,11 +19,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
 public class HelloController implements Initializable {
 
-
     private static Part partToModify;
+    private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     @FXML
     private Button addPartButton;
@@ -69,22 +65,11 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PartTableView.setItems(Inventory.getAllParts());
-        partID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        partName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        pricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        ProductTableView.setItems(Inventory.getAllProducts());
-        productID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        productPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+        populateTables();
     }
 
     public HelloController() {
     }
-
 
     @FXML
     protected void addPartClicked(ActionEvent event) throws IOException {
@@ -101,7 +86,11 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void deletePartClicked() {
-        PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
+        if (PartTableView.getSelectionModel().getSelectedItem() == null) {
+            showAlertMsg("part");
+        } else {
+            PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
@@ -116,7 +105,11 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void deleteProductClicked() {
-        ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
+        if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
+            showAlertMsg("product");
+        } else {
+            ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
@@ -124,6 +117,24 @@ public class HelloController implements Initializable {
         System.exit(0);
     }
 
+    private void showAlertMsg(String item) {
+        alert.setTitle("Error");
+        alert.setContentText("Please choose a %s to delete.".formatted(item));;
+        alert.showAndWait();
+    }
 
+    private void populateTables() {
+        PartTableView.setItems(Inventory.getAllParts());
+        partID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        inventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        pricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        ProductTableView.setItems(Inventory.getAllProducts());
+        productID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
 
 }
