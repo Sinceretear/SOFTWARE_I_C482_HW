@@ -19,8 +19,8 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="partInHouse" mnemonicParsing="false" prefHeight="18.0" prefWidth="138.0" text="In-House" />
-                <RadioButton fx:id="partOutsourced" mnemonicParsing="false" prefHeight="18.0" prefWidth="138.0" text="Outsourced" />
+                <RadioButton fx:id="partInHouse" mnemonicParsing="false" onAction="#inHouseSelected" prefHeight="18.0" prefWidth="138.0" text="In-House" />
+                <RadioButton fx:id="partOutsourced" mnemonicParsing="false" onAction="#outsourcedSelected" prefHeight="18.0" prefWidth="138.0" text="Outsourced" />
             </children>
         </FlowPane>
         <VBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="77.0" prefHeight="363.0" prefWidth="465.0">
@@ -73,7 +73,7 @@
                 </FlowPane>
                 <FlowPane alignment="BOTTOM_RIGHT" hgap="20.0" prefHeight="32.0" prefWidth="241.0">
                     <children>
-                        <Button mnemonicParsing="false" text="Save" />
+                        <Button fx:id="savePart" mnemonicParsing="false" onAction="#modifyPart" text="Save" />
                         <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                     </children>
                     <VBox.margin>

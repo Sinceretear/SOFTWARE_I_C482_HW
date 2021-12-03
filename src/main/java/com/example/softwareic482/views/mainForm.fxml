@@ -34,7 +34,7 @@
               </columns>
             </TableView>
             <Label layoutX="21.0" layoutY="17.0" prefHeight="25.0" prefWidth="82.0" text="Parts" />
-            <TextField layoutX="361.0" layoutY="17.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="queryParts" layoutX="361.0" layoutY="17.0" onAction="#getSearchResultsForParts" promptText="Search by Part ID or Name" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="590.0" layoutY="56.0" prefHeight="248.0" prefWidth="523.0" style="-fx-border-width: 2; -fx-border-color: black;">
@@ -55,7 +55,7 @@
                </columns>
             </TableView>
             <Label layoutX="21.0" layoutY="17.0" prefHeight="25.0" prefWidth="82.0" text="Products" />
-            <TextField layoutX="332.0" layoutY="17.0" promptText="Search by Product ID or Name" />
+            <TextField fx:id="queryProducts" layoutX="332.0" layoutY="17.0" onAction="#getSearchResultsForProducts" promptText="Search by Product ID or Name" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="916.0" layoutY="315.0" prefHeight="71.0" prefWidth="200.0">

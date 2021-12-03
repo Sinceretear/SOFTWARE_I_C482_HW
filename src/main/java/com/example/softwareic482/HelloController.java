@@ -2,6 +2,8 @@ package com.example.softwareic482;
 
 import com.example.softwareic482.controller.ModifyPartController;
 import com.example.softwareic482.model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +41,10 @@ public class HelloController implements Initializable {
     @FXML
     private Button exit;
     @FXML
+    private TextField queryParts;
+    @FXML
+    private TextField queryProducts;
+    @FXML
     private Navigation nav = new Navigation();
 
     @FXML
@@ -51,7 +57,6 @@ public class HelloController implements Initializable {
     private TableColumn<Part, Integer> inventoryLevel;
     @FXML
     private TableColumn<Part, Double> pricePerUnit;
-
     @FXML
     private TableView<Product> ProductTableView;
     @FXML
@@ -62,6 +67,7 @@ public class HelloController implements Initializable {
     private TableColumn<Part, Integer> productInventoryLevel;
     @FXML
     private TableColumn<Part, Double> productPricePerUnit;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,10 +85,14 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void modifyPartClicked(ActionEvent event) throws IOException {
-        Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
-        nav.goToModifyPartController(selectedPart,"src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
-    }
+        if (PartTableView.getSelectionModel().getSelectedItem() == null) {
+            showAlertModifyMsg("part");
+        } else {
+            Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
+            nav.goToModifyPartController(selectedPart,"src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
+        }
 
+    }
 
     @FXML
     protected void deletePartClicked() {
@@ -117,9 +127,63 @@ public class HelloController implements Initializable {
         System.exit(0);
     }
 
+    @FXML
+    protected void getSearchResultsForParts(ActionEvent event) throws IOException {
+        String q = queryParts.getText();
+        ObservableList<Part> parts = searchbyPartName(q);
+        PartTableView.setItems(parts);
+        if (parts.isEmpty()) {
+            showAlertForSearch();
+        }
+    }
+
+    private ObservableList<Part> searchbyPartName(String partialName) {
+        ObservableList<Part> namedParts = FXCollections.observableArrayList();
+        ObservableList<Part> allParts = Inventory.getAllParts();
+        for(Part pt : allParts) {
+            if(pt.getName().contains(partialName) || String.valueOf(pt.getId()).contains(partialName)) {
+                namedParts.add(pt);
+            }
+        }
+        return namedParts;
+    }
+
+    @FXML
+    protected void getSearchResultsForProducts(ActionEvent event) throws IOException {
+        String q = queryProducts.getText();
+        ObservableList<Product> product = searchbyProductName(q);
+        ProductTableView.setItems(product);
+        if (product.isEmpty()) {
+            showAlertForSearch();
+        }
+    }
+
+    private ObservableList<Product> searchbyProductName(String partialName) {
+        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+        for(Product pd : allProducts) {
+            if(pd.getName().contains(partialName) || String.valueOf(pd.getId()).contains(partialName)) {
+                namedProducts.add(pd);
+            }
+        }
+        return namedProducts;
+    }
+
     private void showAlertMsg(String item) {
         alert.setTitle("Error");
         alert.setContentText("Please choose a %s to delete.".formatted(item));;
+        alert.showAndWait();
+    }
+
+    private void showAlertModifyMsg(String item) {
+        alert.setTitle("Error");
+        alert.setContentText("Please choose a %s to modify.".formatted(item));;
+        alert.showAndWait();
+    }
+
+    private void showAlertForSearch() {
+        alert.setTitle("Error");
+        alert.setContentText("No Results (Search results are case sensitive)");
         alert.showAndWait();
     }
 

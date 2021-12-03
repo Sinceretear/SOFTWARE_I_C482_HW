@@ -7,10 +7,7 @@ import com.example.softwareic482.model.Outsourced;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +15,8 @@ import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
 
+    private int partIDNum;
+    private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     @FXML
     private Button cancel;
@@ -52,6 +51,9 @@ public class AddPartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        int random = (int)(Math.random() * 99 + 1);
+        partIDNum = random;
+        partID.setText(String.valueOf(random));
     }
 
     @FXML
@@ -77,30 +79,32 @@ public class AddPartController implements Initializable {
 
     @FXML
     protected void savePart(ActionEvent event) throws IOException {
-        int random = (int )(Math.random() * 99 + 1);
+
         String name = partName.getText();
         int inventory = Integer.parseInt(partInv.getText());
         double price = Double.parseDouble(partPrice.getText());
         int max = Integer.parseInt(partMax.getText());
         int min = Integer.parseInt(partMin.getText());
 
-        if (partInHouse.isSelected()) {
+        if ( (partInHouse.isSelected()) && (inventory < max && min < max) ) {
             int machineID = Integer.parseInt(partMachineID.getText());
-            InHouse newPart = new InHouse(random,name,price,inventory,min,max,machineID);
+            InHouse newPart = new InHouse(partIDNum,name,price,inventory,min,max,machineID);
             Inventory.addPart(newPart);
             nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
-        } else if (partOutsourced.isSelected()) {
+        }  else if ( (partOutsourced.isSelected()) && (inventory < max && min < max) ) {
             String companyName = partMachineID.getText();
-            Outsourced newPart = new Outsourced(random,name,price,inventory,min,max,companyName);
+            Outsourced newPart = new Outsourced(partIDNum,name,price,inventory,min,max,companyName);
             Inventory.addPart(newPart);
             nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
         } else {
-            // alert please selected a category
+            showAlertMsg();
         }
-
-
     }
 
-
+    private void showAlertMsg() {
+        alert.setTitle("Error");
+        alert.setContentText("Please enter correct min & max values");
+        alert.showAndWait();
+    }
 
 }

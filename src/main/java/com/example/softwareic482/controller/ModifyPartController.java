@@ -1,17 +1,11 @@
 package com.example.softwareic482.controller;
 
 import com.example.softwareic482.HelloController;
-import com.example.softwareic482.model.InHouse;
-import com.example.softwareic482.model.Outsourced;
-import com.example.softwareic482.model.Navigation;
-import com.example.softwareic482.model.Part;
+import com.example.softwareic482.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +14,7 @@ import java.util.ResourceBundle;
 public class ModifyPartController implements Initializable {
 
     private Part selectedPart;
+    private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     @FXML
     private Button cancel;
@@ -77,6 +72,8 @@ public class ModifyPartController implements Initializable {
         partPrice.setText(part.getPrice());
         partMin.setText(part.getMin());
         partMax.setText(part.getMax());
+
+        selectedPart = part;
     }
 
     @FXML
@@ -84,7 +81,54 @@ public class ModifyPartController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
     }
 
+    @FXML
+    protected void modifyPart(ActionEvent event) throws IOException {
+        Inventory.deletePart(selectedPart);
 
+        String name = partName.getText();
+        int id = Integer.parseInt(partID.getText());
+        int inventory = Integer.parseInt(partInv.getText());
+        double price = Double.parseDouble(partPrice.getText());
+        int max = Integer.parseInt(partMax.getText());
+        int min = Integer.parseInt(partMin.getText());
+
+        if ( (partInHouse.isSelected()) && (inventory < max && min < max) ) {
+            int machineID = Integer.parseInt(partMachineID.getText());
+            InHouse newPart = new InHouse(id,name,price,inventory,min,max,machineID);
+            Inventory.addPart(newPart);
+            nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
+        }  else if ( (partOutsourced.isSelected()) && (inventory < max && min < max) ) {
+            String companyName = partMachineID.getText();
+            Outsourced newPart = new Outsourced(id,name,price,inventory,min,max,companyName);
+            Inventory.addPart(newPart);
+            nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
+        } else {
+            showAlertMsg();
+        }
+    }
+
+    private void showAlertMsg() {
+        alert.setTitle("Error");
+        alert.setContentText("Please enter correct min & max values");
+        alert.showAndWait();
+    }
+
+
+    @FXML
+    protected void outsourcedSelected(ActionEvent event) throws IOException {
+        if (partOutsourced.isSelected()) {
+            partInHouse.setSelected(false);
+            machineOrCompany.setText("Company Name");
+        }
+    }
+
+    @FXML
+    protected void inHouseSelected(ActionEvent event) throws IOException {
+        if (partInHouse.isSelected()) {
+            machineOrCompany.setText("Machine ID");
+            partOutsourced.setSelected(false);
+        }
+    }
 
 }
 
