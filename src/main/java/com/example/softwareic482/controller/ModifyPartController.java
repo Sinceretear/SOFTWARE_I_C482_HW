@@ -92,12 +92,12 @@ public class ModifyPartController implements Initializable {
         int max = Integer.parseInt(partMax.getText());
         int min = Integer.parseInt(partMin.getText());
 
-        if ( (partInHouse.isSelected()) && (inventory < max && min < max) ) {
+        if ( (partInHouse.isSelected()) && (inventory < max && min < max && inventory > min) ) {
             int machineID = Integer.parseInt(partMachineID.getText());
             InHouse newPart = new InHouse(id,name,price,inventory,min,max,machineID);
             Inventory.addPart(newPart);
             nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
-        }  else if ( (partOutsourced.isSelected()) && (inventory < max && min < max) ) {
+        }  else if ( (partOutsourced.isSelected()) && (inventory < max && min < max && inventory > min) ) {
             String companyName = partMachineID.getText();
             Outsourced newPart = new Outsourced(id,name,price,inventory,min,max,companyName);
             Inventory.addPart(newPart);

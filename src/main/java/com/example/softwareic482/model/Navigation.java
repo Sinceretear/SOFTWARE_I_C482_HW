@@ -1,6 +1,7 @@
 package com.example.softwareic482.model;
 
 import com.example.softwareic482.controller.ModifyPartController;
+import com.example.softwareic482.controller.ModifyProductController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,13 +42,13 @@ public class Navigation {
     }
 
 
-    public void goToModifyProductController(Part part, String nameOfFile, ActionEvent event) throws IOException {
+    public void goToModifyProductController(Product product, String nameOfFile, ActionEvent event) throws IOException {
         try{
             URL url = new File(nameOfFile).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
-            ModifyPartController controller = loader.getController();
-            controller.setItems(part);
+            ModifyProductController controller = loader.getController();
+            controller.setItems(product);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

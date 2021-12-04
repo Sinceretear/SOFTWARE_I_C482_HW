@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -25,6 +26,7 @@ public class HelloController implements Initializable {
 
     private static Part partToModify;
     private Alert alert = new Alert(Alert.AlertType.ERROR);
+    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
     @FXML
     private Button addPartButton;
@@ -91,7 +93,6 @@ public class HelloController implements Initializable {
             Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
             nav.goToModifyPartController(selectedPart,"src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
         }
-
     }
 
     @FXML
@@ -99,7 +100,9 @@ public class HelloController implements Initializable {
         if (PartTableView.getSelectionModel().getSelectedItem() == null) {
             showAlertMsg("part");
         } else {
-            PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
+            if (showconfirmationAlert()) {
+                PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
+            }
         }
     }
 
@@ -110,7 +113,12 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void modifyProductClicked(ActionEvent event) throws IOException {
-        nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/modifyProductForm.fxml", event);
+        if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
+            showAlertModifyMsg("product");
+        } else {
+            Product selectedProduct = ProductTableView.getSelectionModel().getSelectedItem();
+            nav.goToModifyProductController(selectedProduct,"src/main/java/com/example/softwareic482/views/modifyProductForm.fxml", event);
+        }
     }
 
     @FXML
@@ -118,7 +126,9 @@ public class HelloController implements Initializable {
         if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
             showAlertMsg("product");
         } else {
-            ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
+            if (showconfirmationAlert()) {
+                ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
+            }
         }
     }
 
@@ -181,6 +191,16 @@ public class HelloController implements Initializable {
         alert.showAndWait();
     }
 
+    private boolean showconfirmationAlert() {
+        alert.setTitle("Alert");
+        alert.setContentText("Delete this Part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     private void showAlertForSearch() {
         alert.setTitle("Error");
         alert.setContentText("No Results (Search results are case sensitive)");

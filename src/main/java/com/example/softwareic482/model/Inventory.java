@@ -57,8 +57,14 @@ public class Inventory {
             }
     }
 
-    public boolean deleteProduct(Product selectedPart) {
+    public static boolean deleteProduct(Product selectedPart) {
+        if (allProducts.contains(selectedPart)) {
+            allProducts.remove(selectedPart);
             return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public static ObservableList<Part> getAllParts() {

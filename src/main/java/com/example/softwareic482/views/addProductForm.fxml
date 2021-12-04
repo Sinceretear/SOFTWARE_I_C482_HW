@@ -22,39 +22,39 @@
          <children>
             <FlowPane alignment="CENTER" hgap="10.0" layoutX="369.0" layoutY="206.0" prefHeight="25.0" prefWidth="161.0" AnchorPane.rightAnchor="23.0">
                <children>
-                  <Button mnemonicParsing="false" text="Add" />
+                  <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#saveProduct" text="Add" />
                </children>
             </FlowPane>
-            <TableView layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
+            <TableView fx:id="ProductTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Part ID" />
-                  <TableColumn prefWidth="88.0" text="Part Name" />
-                  <TableColumn prefWidth="123.0" text="Inventory Level" />
-                  <TableColumn prefWidth="245.0" text="Price/ Cost per Unit" />
+                  <TableColumn fx:id="productID" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="productName" prefWidth="88.0" text="Part Name" />
+                  <TableColumn fx:id="productInventoryLevel" prefWidth="123.0" text="Inventory Level" />
+                  <TableColumn fx:id="productPricePerUnit" prefWidth="245.0" text="Price/ Cost per Unit" />
                </columns>
             </TableView>
-            <TextField layoutX="361.0" layoutY="17.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="queryProducts" layoutX="361.0" layoutY="17.0" onAction="#getSearchResultsForProducts" promptText="Search by Part ID or Name" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="606.0" layoutY="368.0" prefHeight="293.0" prefWidth="526.0" style="-fx-border-width: 2; -fx-border-color: black;">
          <children>
             <FlowPane alignment="CENTER" hgap="10.0" layoutX="369.0" layoutY="206.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.rightAnchor="21.0">
                <children>
-                  <Button mnemonicParsing="false" text="Remove Associated Part" />
+                  <Button fx:id="removeAssociatedProductButton" mnemonicParsing="false" onAction="#removeAssociatedProduct" text="Remove Associated Product" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" hgap="30.0" layoutX="328.0" layoutY="242.0" prefHeight="25.0" prefWidth="194.0">
                <children>
-                  <Button mnemonicParsing="false" text="Save" />
+                  <Button fx:id="saveProduct" mnemonicParsing="false" onAction="#saveAssociatedProduct" text="Save" />
                   <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                </children>
             </FlowPane>
-            <TableView layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
+            <TableView fx:id="AssociatedProductTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Part ID" />
-                  <TableColumn prefWidth="88.0" text="Part Name" />
-                  <TableColumn prefWidth="123.0" text="Inventory Level" />
-                  <TableColumn prefWidth="245.0" text="Price/ Cost per Unit" />
+                  <TableColumn fx:id="AssociatedProductID" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="AssociatedProductName" prefWidth="88.0" text="Part Name" />
+                  <TableColumn fx:id="AssociatedProductInventoryLevel" prefWidth="123.0" text="Inventory Level" />
+                  <TableColumn fx:id="AssociatedProductPricePerUnit" prefWidth="245.0" text="Price/ Cost per Unit" />
                </columns>
             </TableView>
          </children>
@@ -64,25 +64,25 @@
             <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="70.0" text="ID" />
-                  <TextField editable="false" promptText="Auo Gen - Disabled" />
+                  <TextField fx:id="productIDField" editable="false" promptText="Auo Gen - Disabled" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="70.0" text="Name" />
-                  <TextField />
+                  <TextField fx:id="productNameField" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="70.0" text="Inv" />
-                  <TextField />
+                  <TextField fx:id="productInv" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="401.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="70.0" text="Price" />
-                  <TextField />
+                  <TextField fx:id="productPrice" />
                </children>
             </FlowPane>
             <FlowPane prefHeight="39.0" prefWidth="396.0">
@@ -90,13 +90,13 @@
                   <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="242.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="70.0" text="Max" />
-                        <TextField />
+                        <TextField fx:id="productMax" />
                      </children>
                   </FlowPane>
                   <FlowPane alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="209.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="40.0" text="Min" />
-                        <TextField />
+                        <TextField fx:id="productMin" />
                      </children>
                   </FlowPane>
                </children>
