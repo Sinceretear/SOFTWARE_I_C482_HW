@@ -201,6 +201,7 @@ public class HelloController implements Initializable {
             return false;
         }
     }
+
     private void showAlertForSearch() {
         alert.setTitle("Error");
         alert.setContentText("No Results (Search results are case sensitive)");
