@@ -22,7 +22,7 @@
          <children>
             <FlowPane alignment="CENTER" hgap="10.0" layoutX="369.0" layoutY="206.0" prefHeight="25.0" prefWidth="161.0" AnchorPane.rightAnchor="23.0">
                <children>
-                  <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#saveProduct" text="Add" />
+                  <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#addPart" text="Add" />
                </children>
             </FlowPane>
             <TableView fx:id="ProductTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
@@ -45,11 +45,11 @@
             </FlowPane>
             <FlowPane alignment="CENTER_LEFT" hgap="30.0" layoutX="328.0" layoutY="242.0" prefHeight="25.0" prefWidth="194.0">
                <children>
-                  <Button fx:id="saveProduct" mnemonicParsing="false" onAction="#saveAssociatedProduct" text="Save" />
+                  <Button fx:id="saveProduct" mnemonicParsing="false" onAction="#save" text="Save" />
                   <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                </children>
             </FlowPane>
-            <TableView fx:id="AssociatedProductTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
+            <TableView fx:id="AssociatedPartsTableView" layoutX="21.0" layoutY="42.0" prefHeight="151.0" prefWidth="501.0">
                <columns>
                   <TableColumn fx:id="AssociatedProductID" prefWidth="75.0" text="Part ID" />
                   <TableColumn fx:id="AssociatedProductName" prefWidth="88.0" text="Part Name" />

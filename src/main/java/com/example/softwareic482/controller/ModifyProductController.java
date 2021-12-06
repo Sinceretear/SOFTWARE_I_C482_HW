@@ -16,17 +16,17 @@ import java.util.ResourceBundle;
 public class ModifyProductController implements Initializable {
 
     private Product selectedProduct;
-
-    private Alert alert = new Alert(Alert.AlertType.ERROR);
+    private ObservableList<Part> assocParts = FXCollections.observableArrayList();
+    private Alerts alert = new Alerts();
 
     @FXML
     private Button cancel;
     @FXML
     private Button saveProduct;
     @FXML
-    private Button addProductButton;
+    private Button addPartButton;
     @FXML
-    private Button removeAssociatedProductButton;
+    private Button removeAssociatedPartButton;
 
     @FXML
     private TextField productIDField;
@@ -56,7 +56,7 @@ public class ModifyProductController implements Initializable {
     private TableColumn<Product, Double> productPricePerUnit;
 
     @FXML
-    private TableView<Part> AssociatedProductTableView;
+    private TableView<Part> AssociatedPartTableView;
     @FXML
     private TableColumn<Part,Integer> AssociatedProductID;
     @FXML
@@ -96,6 +96,8 @@ public class ModifyProductController implements Initializable {
         productMax.setText(String.valueOf(toMax));
 
         selectedProduct = product;
+        assocParts = selectedProduct.getAllAssociatedParts();
+        populateTables();
     }
 
     private Part createPart(Product selectedPart) {
@@ -112,43 +114,51 @@ public class ModifyProductController implements Initializable {
     }
 
     @FXML
-    protected void saveProduct(ActionEvent event) throws IOException {
+    protected void addPart(ActionEvent event) throws IOException {
         if(ProductTableView.getSelectionModel().getSelectedItem() != null) {
             Product selectedPart = ProductTableView.getSelectionModel().getSelectedItem();
             Part newPart = createPart(selectedPart);
-            Product.addAssociatedPart(newPart);
+            assocParts.add(newPart);
             populateTables();
         } else {
-            showAlertMsg("part");
+            alert.showAlertMsg("part");
         }
     }
 
     @FXML
-    protected void removeAssociatedProduct(ActionEvent event) throws IOException {
-        if (AssociatedProductTableView.getSelectionModel().getSelectedItem() == null) {
-            showAlertMsg("part");
+    protected void removeAssociatedPart(ActionEvent event) throws IOException {
+        if (AssociatedPartTableView.getSelectionModel().getSelectedItem() == null) {
+            alert.showAlertMsg("part");
         } else {
-            AssociatedProductTableView.getItems().removeAll(AssociatedProductTableView.getSelectionModel().getSelectedItem());
+            if (alert.showconfirmationAlert()) {
+                AssociatedPartTableView.getItems().removeAll(AssociatedPartTableView.getSelectionModel().getSelectedItem());
+            }
         }
-
     }
 
     @FXML
-    protected void saveAssociatedProduct(ActionEvent event) throws IOException {
-        String name = productNameField.getText();
-        int toPartID = Integer.parseInt(productIDField.getText());
-        int inventory = Integer.parseInt(productInv.getText());
-        double price = Double.parseDouble(productPrice.getText());
-        int max = Integer.parseInt(productMax.getText());
-        int min = Integer.parseInt(productMin.getText());
+    protected void save(ActionEvent event) throws IOException {
+        try {
+            String name = productNameField.getText();
+            int toPartID = Integer.parseInt(productIDField.getText());
+            int inventory = Integer.parseInt(productInv.getText());
+            double price = Double.parseDouble(productPrice.getText());
+            int max = Integer.parseInt(productMax.getText());
+            int min = Integer.parseInt(productMin.getText());
 
-        if ( (inventory < max && min < max) ) {
-            Product newProduct = new Product(toPartID,name,price,inventory,min,max);
-            Inventory.addProduct(newProduct);
-            Inventory.deleteProduct(selectedProduct);
-            nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
-        } else {
-            showAlertMsg();
+            if ((inventory < max && min < max && inventory > min)) {
+                Product newProduct = new Product(toPartID,name,price,inventory,min,max);
+                Inventory.addProduct(newProduct);
+                for (Part part : assocParts) {
+                    newProduct.addAssociatedPart(part);
+                }
+                Inventory.deleteProduct(selectedProduct);
+                nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
+            } else {
+                alert.showAlertMsg();
+            }
+        } catch(Exception e) {
+            alert.showAlertInputValid();
         }
 
     }
@@ -159,7 +169,7 @@ public class ModifyProductController implements Initializable {
         ObservableList<Product> product = searchbyProductName(q);
         ProductTableView.setItems(product);
         if (product.isEmpty()) {
-            showAlertForSearch();
+            alert.showAlertForSearch();
         }
     }
 
@@ -179,38 +189,29 @@ public class ModifyProductController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
     }
 
-    private void showAlertForSearch() {
-        alert.setTitle("Error");
-        alert.setContentText("No Results (Search results are case sensitive)");
-        alert.showAndWait();
-    }
-
-    private void showAlertMsg(String item) {
-        alert.setTitle("Error");
-        alert.setContentText("Please choose a %s to add.".formatted(item));;
-        alert.showAndWait();
-    }
-
-    private void showAlertMsg() {
-        alert.setTitle("Error");
-        alert.setContentText("Please enter correct min & max values");
-        alert.showAndWait();
-    }
-
     private void populateTables() {
+
+
         ProductTableView.setItems(Inventory.getAllProducts());
         productID.setCellValueFactory(new PropertyValueFactory<>("id"));
         productName.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        if (Product.getAllAssociatedParts().isEmpty() == false) {
-            AssociatedProductTableView.setItems(Product.getAllAssociatedParts());
-            AssociatedProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
-            AssociatedProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            AssociatedProductInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-            AssociatedProductPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
-        }
+
+        AssociatedProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        AssociatedProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        AssociatedProductInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        AssociatedProductPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+        AssociatedPartTableView.setItems(assocParts);
+
+//        if (selectedProduct.getAllAssociatedParts().isEmpty() == false) {
+//            AssociatedPartTableView.setItems(selectedProduct.getAllAssociatedParts());
+//            AssociatedProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
+//            AssociatedProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
+//            AssociatedProductInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//            AssociatedProductPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
+//        }
     }
 
 }

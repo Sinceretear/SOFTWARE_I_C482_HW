@@ -25,8 +25,8 @@ import java.util.ResourceBundle;
 public class HelloController implements Initializable {
 
     private static Part partToModify;
-    private Alert alert = new Alert(Alert.AlertType.ERROR);
-    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+
+    private Alerts alert = new Alerts();
 
     @FXML
     private Button addPartButton;
@@ -88,7 +88,7 @@ public class HelloController implements Initializable {
     @FXML
     protected void modifyPartClicked(ActionEvent event) throws IOException {
         if (PartTableView.getSelectionModel().getSelectedItem() == null) {
-            showAlertModifyMsg("part");
+            alert.showAlertModifyMsg("part");
         } else {
             Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
             nav.goToModifyPartController(selectedPart,"src/main/java/com/example/softwareic482/views/modifyPartForm.fxml", event);
@@ -98,9 +98,9 @@ public class HelloController implements Initializable {
     @FXML
     protected void deletePartClicked() {
         if (PartTableView.getSelectionModel().getSelectedItem() == null) {
-            showAlertMsg("part");
+            alert.showAlertMsg("part");
         } else {
-            if (showconfirmationAlert()) {
+            if (alert.showconfirmationAlert()) {
                 PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
             }
         }
@@ -114,7 +114,7 @@ public class HelloController implements Initializable {
     @FXML
     protected void modifyProductClicked(ActionEvent event) throws IOException {
         if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
-            showAlertModifyMsg("product");
+            alert.showAlertModifyMsg("product");
         } else {
             Product selectedProduct = ProductTableView.getSelectionModel().getSelectedItem();
             nav.goToModifyProductController(selectedProduct,"src/main/java/com/example/softwareic482/views/modifyProductForm.fxml", event);
@@ -124,11 +124,17 @@ public class HelloController implements Initializable {
     @FXML
     protected void deleteProductClicked() {
         if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
-            showAlertMsg("product");
+            alert.showAlertMsg("product");
         } else {
-            if (showconfirmationAlert()) {
-                ProductTableView.getItems().removeAll(ProductTableView.getSelectionModel().getSelectedItem());
-            }
+           Product selectedProduct = ProductTableView.getSelectionModel().getSelectedItem();
+           if (selectedProduct.getAllAssociatedParts().isEmpty() == false) {
+                    alert.showAlertForAssociatedParts();
+           } else {
+               if (alert.showconfirmationAlert()) {
+                   ProductTableView.getItems().removeAll(selectedProduct);
+               }
+           }
+
         }
     }
 
@@ -143,7 +149,7 @@ public class HelloController implements Initializable {
         ObservableList<Part> parts = searchbyPartName(q);
         PartTableView.setItems(parts);
         if (parts.isEmpty()) {
-            showAlertForSearch();
+            alert.showAlertForSearch();
         }
     }
 
@@ -164,7 +170,7 @@ public class HelloController implements Initializable {
         ObservableList<Product> product = searchbyProductName(q);
         ProductTableView.setItems(product);
         if (product.isEmpty()) {
-            showAlertForSearch();
+            alert.showAlertForSearch();
         }
     }
 
@@ -177,35 +183,6 @@ public class HelloController implements Initializable {
             }
         }
         return namedProducts;
-    }
-
-    private void showAlertMsg(String item) {
-        alert.setTitle("Error");
-        alert.setContentText("Please choose a %s to delete.".formatted(item));;
-        alert.showAndWait();
-    }
-
-    private void showAlertModifyMsg(String item) {
-        alert.setTitle("Error");
-        alert.setContentText("Please choose a %s to modify.".formatted(item));;
-        alert.showAndWait();
-    }
-
-    private boolean showconfirmationAlert() {
-        alert.setTitle("Alert");
-        alert.setContentText("Delete this Part?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void showAlertForSearch() {
-        alert.setTitle("Error");
-        alert.setContentText("No Results (Search results are case sensitive)");
-        alert.showAndWait();
     }
 
     private void populateTables() {

@@ -21,8 +21,8 @@ public abstract class Part {
     /**
      * @return the id
      */
-    public String getId() {
-        return String.valueOf(id);
+    public int getId() {
+        return id;
     }
 
     /**
@@ -49,8 +49,8 @@ public abstract class Part {
     /**
      * @return the price
      */
-    public String getPrice() {
-        return String.valueOf(price);
+    public double getPrice() {
+        return price;
     }
 
     /**
@@ -63,8 +63,8 @@ public abstract class Part {
     /**
      * @return the stock
      */
-    public String getStock() {
-        return String.valueOf(stock);
+    public int getStock() {
+        return stock;
     }
 
     /**
@@ -77,8 +77,8 @@ public abstract class Part {
     /**
      * @return the min
      */
-    public String getMin() {
-        return String.valueOf(min);
+    public int getMin() {
+        return min;
     }
 
     /**
@@ -91,8 +91,8 @@ public abstract class Part {
     /**
      * @return the max
      */
-    public String getMax() {
-        return String.valueOf(max);
+    public int getMax() {
+        return max;
     }
 
     /**
