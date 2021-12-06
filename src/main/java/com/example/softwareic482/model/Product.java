@@ -23,7 +23,6 @@ public class Product {
         this.max = max;
     }
 
-
     public int getId() {
         return id;
     }
