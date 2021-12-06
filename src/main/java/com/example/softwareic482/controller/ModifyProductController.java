@@ -13,9 +13,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Business logic for modifying a product
+ */
+
 public class ModifyProductController implements Initializable {
 
+    /**
+     * The selected product to modify needs to be set before showing the modify parts screen
+     */
     private Product selectedProduct;
+
+    /**
+     * Holds associated parts for this product
+     */
     private ObservableList<Part> assocParts = FXCollections.observableArrayList();
     private Alerts alert = new Alerts();
 
@@ -41,6 +52,9 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TextField productMin;
 
+    /**
+     * Connects textfield to search functionality
+     */
     @FXML
     private TextField queryProducts;
 
@@ -69,7 +83,9 @@ public class ModifyProductController implements Initializable {
     @FXML
     Navigation nav = new Navigation();
 
-
+    /**
+     * Populates tables with appropriate data from selectedProduct
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateTables();
@@ -78,7 +94,9 @@ public class ModifyProductController implements Initializable {
     public ModifyProductController() {
     }
 
-
+    /**
+     * Sets up text fields and tables with preloaded data is called before pushing screen onto view
+     */
     @FXML
     public void setItems(Product product) {
         String toPartName = product.getName();
@@ -113,6 +131,9 @@ public class ModifyProductController implements Initializable {
         return assPartToBeAdded;
     }
 
+    /**
+     * Adds a new art to the associated parts list for this product
+     */
     @FXML
     protected void addPart(ActionEvent event) throws IOException {
         if(ProductTableView.getSelectionModel().getSelectedItem() != null) {
@@ -125,6 +146,9 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * deletes an associaated part
+     */
     @FXML
     protected void removeAssociatedPart(ActionEvent event) throws IOException {
         if (AssociatedPartTableView.getSelectionModel().getSelectedItem() == null) {
@@ -136,6 +160,10 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Saves the Product by essentially deleting the old one and creating the new one to give the appearance of
+     * an update
+     */
     @FXML
     protected void save(ActionEvent event) throws IOException {
         try {
@@ -163,6 +191,9 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * FUTURE ENHANCEMENT - should probably be in its own class
+     */
     @FXML
     protected void getSearchResultsForProducts(ActionEvent event) throws IOException {
         String q = queryProducts.getText();
@@ -189,29 +220,22 @@ public class ModifyProductController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
     }
 
+    /**
+     * FUTURE ENHANCEMENT - Could also probably be in its own class and
+     * could have params to pass in the table and list of components to setValues for.
+     */
     private void populateTables() {
-
-
         ProductTableView.setItems(Inventory.getAllProducts());
         productID.setCellValueFactory(new PropertyValueFactory<>("id"));
         productName.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-
         AssociatedProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
         AssociatedProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
         AssociatedProductInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
         AssociatedProductPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
         AssociatedPartTableView.setItems(assocParts);
-
-//        if (selectedProduct.getAllAssociatedParts().isEmpty() == false) {
-//            AssociatedPartTableView.setItems(selectedProduct.getAllAssociatedParts());
-//            AssociatedProductID.setCellValueFactory(new PropertyValueFactory<>("id"));
-//            AssociatedProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
-//            AssociatedProductInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//            AssociatedProductPricePerUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
-//        }
     }
 
 }

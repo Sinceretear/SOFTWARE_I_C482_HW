@@ -15,7 +15,17 @@ import java.io.IOException;
 import java.net.URL;
 
 
-public class HelloApplication extends Application {
+/**
+ * Hunter Walker Software I - C482
+ *
+ * This is the starting point of the application and displays the main screen and loads the initial test data.
+ */
+
+public class MainApplication extends Application {
+
+    /**
+     * Loads the Home-screen or "mainForm"
+     */
     @Override
     public void start(Stage stage) throws IOException {
         URL url = new File("src/main/java/com/example/softwareic482/views/mainForm.fxml").toURI().toURL();
@@ -26,6 +36,9 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Populates the parts table
+     */
     private static void populateParts() {
         InHouse part1 = new InHouse(1,"tire",156.73,14,4,999, 12);
         Inventory.addPart(part1);
@@ -35,6 +48,9 @@ public class HelloApplication extends Application {
         Inventory.addPart(part3);
     }
 
+    /**
+     * Populated the products table
+     */
     private static void populateProducts() {
         Product product1 = new Product(1,"Car",1776.73,6,2,999);
         Inventory.addProduct(product1);
@@ -44,7 +60,9 @@ public class HelloApplication extends Application {
         Inventory.addProduct(product3);
     }
 
-
+    /**
+     * initializes the tables and launches the application
+     */
     public static void main(String[] args) {
         populateParts();
         populateProducts();

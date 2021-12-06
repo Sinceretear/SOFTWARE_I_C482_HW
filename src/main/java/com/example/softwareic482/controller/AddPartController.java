@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Business logic for add part screen
+ */
+
 public class AddPartController implements Initializable {
 
     private int partIDNum;
@@ -46,6 +50,9 @@ public class AddPartController implements Initializable {
     public AddPartController() {
     }
 
+    /**
+     * Sets part ID
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         int random = (int)(Math.random() * 99 + 1);
@@ -58,6 +65,9 @@ public class AddPartController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
     }
 
+    /**
+     * Controls raido buttons
+     */
     @FXML
     protected void outsourcedSelected(ActionEvent event) throws IOException {
         if (partOutsourced.isSelected()) {
@@ -74,6 +84,9 @@ public class AddPartController implements Initializable {
         }
     }
 
+    /**
+     * Saves part to inventory
+     */
     @FXML
     protected void savePart(ActionEvent event) throws IOException {
         try {

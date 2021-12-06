@@ -1,5 +1,10 @@
 package com.example.softwareic482.model;
 
+/**
+ * Subclass or Part. Is able to be instantiated and extends part functionality
+ * by adding an additional param.
+ */
+
 public class Outsourced extends Part {
 
     private String companyName;

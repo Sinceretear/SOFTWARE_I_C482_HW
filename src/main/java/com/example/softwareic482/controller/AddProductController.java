@@ -13,11 +13,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Contains business logic for add product screen
+ */
+
 public class AddProductController implements Initializable {
 
     private int partIDNum;
     private Alerts alert = new Alerts();
 
+    /**
+     * Holds associated parts for this product
+     */
     private ObservableList<Part> assocParts = FXCollections.observableArrayList();
 
     @FXML
@@ -73,6 +80,10 @@ public class AddProductController implements Initializable {
     public AddProductController() {
     }
 
+    /**
+     * Creates Part ID and setup table views
+     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         int random = (int)(Math.random() * 99 + 1);
@@ -95,6 +106,9 @@ public class AddProductController implements Initializable {
         return assPartToBeAdded;
     }
 
+    /**
+     * Adds associated part to product array
+     */
     @FXML
     protected void addPart(ActionEvent event) throws IOException {
         if(ProductTableView.getSelectionModel().getSelectedItem() != null) {
@@ -102,13 +116,14 @@ public class AddProductController implements Initializable {
             Part newPart = createPart(selectedProduct);
             assocParts.add(newPart);
             AssociatedPartsTableView.setItems(assocParts);
-
-            //populateAssociatedPartTable();
         } else {
             alert.showAlertMsg("part");
         }
     }
 
+    /**
+     * removes an associated part
+     */
     @FXML
     protected void removeAssociatedProduct(ActionEvent event) throws IOException {
         if (AssociatedPartsTableView.getSelectionModel().getSelectedItem() == null) {
@@ -118,6 +133,9 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Adds a new product to inventory and saves its associated parts to the product
+     */
     @FXML
     protected void save(ActionEvent event) throws IOException {
         try {
@@ -151,6 +169,10 @@ public class AddProductController implements Initializable {
         }
     }
 
+
+    /**
+     * FUTURE ENHANCEMENT - All methods below this line should probably be in their own appropriate class
+     */
     private void populateTables() {
         ProductTableView.setItems(Inventory.getAllProducts());
         productID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -184,5 +206,4 @@ public class AddProductController implements Initializable {
         }
         return namedProducts;
     }
-
 }

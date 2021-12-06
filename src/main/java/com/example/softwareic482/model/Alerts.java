@@ -5,6 +5,11 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
+/**
+ * Many alerts are used in our application. To prevent copy pasta we've created their own class.
+ * These alerts can be used anywhere by creating an alert object and calling the appropriate method.
+ */
+
 public class Alerts {
 
     public Alert alert = new Alert(Alert.AlertType.ERROR);

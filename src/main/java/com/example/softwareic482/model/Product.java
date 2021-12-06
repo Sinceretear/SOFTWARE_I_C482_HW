@@ -3,9 +3,16 @@ package com.example.softwareic482.model;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
-public class Product {
+/**
+ * Initializes products and creates array for associated parts with getters and setters
+ * for product data.
+ */
 
-    private ObservableList<Part> associatedParts = FXCollections.observableArrayList(); // new ObservableList<Part>();
+public class Product {
+    /**
+     * Holds associated parts
+     */
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int id;
     private String name;
@@ -23,6 +30,9 @@ public class Product {
         this.max = max;
     }
 
+    /**
+     * Methods to return product data and set new values
+     */
     public int getId() {
         return id;
     }
@@ -71,11 +81,16 @@ public class Product {
         this.max = max;
     }
 
-
+    /**
+     * Adds associated parts
+     */
     public void addAssociatedPart(Part newPart) {
         associatedParts.add(newPart);
     }
 
+    /**
+     * Deletes associated parts
+     */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         if (associatedParts.contains(selectedAssociatedPart)) {
             associatedParts.remove(selectedAssociatedPart);
@@ -89,6 +104,4 @@ public class Product {
     public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
     }
-
-
 }

@@ -1,5 +1,8 @@
 package com.example.softwareic482.model;
 
+/**
+ * Same as Outsourced. Allows us to initialize a part with a machineID.
+ */
 public class InHouse extends Part {
 
     private int machineId;

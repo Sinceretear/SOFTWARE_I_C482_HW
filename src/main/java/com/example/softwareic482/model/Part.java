@@ -1,5 +1,9 @@
 package com.example.softwareic482.model;
 
+/**
+ * Provided part class
+ */
+
 public abstract class Part {
 
     private int id;
@@ -101,5 +105,4 @@ public abstract class Part {
     public void setMax(int max) {
         this.max = max;
     }
-    
 }

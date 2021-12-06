@@ -1,6 +1,5 @@
 package com.example.softwareic482.controller;
 
-import com.example.softwareic482.HelloController;
 import com.example.softwareic482.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,6 +52,9 @@ public class ModifyPartController implements Initializable {
 
     }
 
+    /**
+     * Is called before modify part view is shown to setup textfields ith data.
+     */
     @FXML
     public void setItems(Part part) {
         if (part instanceof InHouse) {
@@ -81,9 +83,13 @@ public class ModifyPartController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
     }
 
+
+    /**
+     * Again - Method essentially creates a new Part in the Inventory and deletes the old one
+     * giving the illusion of an update
+     */
     @FXML
     protected void modifyPart(ActionEvent event) throws IOException {
-
         try {
             Inventory.deletePart(selectedPart);
 
@@ -112,7 +118,9 @@ public class ModifyPartController implements Initializable {
         }
     }
 
-
+    /**
+     * Switches radio buttons and changes the label to appropriate value
+     */
     @FXML
     protected void outsourcedSelected(ActionEvent event) throws IOException {
         if (partOutsourced.isSelected()) {

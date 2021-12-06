@@ -14,10 +14,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-
+/**
+ * Navigation is used a lot in our application. It makes sense to separate this logic to its own area.
+ */
 
 public class Navigation {
 
+    /**
+     * generic navigation where a url is input and will navigate to that url
+     */
     @FXML
     public void sceneToGoTo(String nameOfFile, ActionEvent event) throws IOException {
         URL url = new File(nameOfFile).toURI().toURL();
@@ -28,6 +33,10 @@ public class Navigation {
         window.show();
     }
 
+    /**
+     * Initializes the controller and calls setItems before navigating to this url
+     * this allows us to populate the data before showing the screen.
+     */
     public void goToModifyPartController(Part part, String nameOfFile, ActionEvent event) throws IOException {
         try{
             URL url = new File(nameOfFile).toURI().toURL();
@@ -41,7 +50,12 @@ public class Navigation {
         } catch (IOException ex2){}
     }
 
-
+    /**
+     * Same functionality as above.
+     * RUNTIME ERROR - had lots of trouble figuring out why my ModifyProductController
+     * wasn't being instantiated.
+     * FIX: Connect all FXML components with the correct names and connections in scenebuilder.
+     */
     public void goToModifyProductController(Product product, String nameOfFile, ActionEvent event) throws IOException {
         try{
             URL url = new File(nameOfFile).toURI().toURL();
@@ -56,6 +70,4 @@ public class Navigation {
             System.out.println(ex2);
         }
     }
-
-
 }

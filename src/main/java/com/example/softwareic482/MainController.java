@@ -22,11 +22,18 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class HelloController implements Initializable {
+/**
+ * MainController is the controls all the business logic for the Home-screen
+ */
+
+public class MainController implements Initializable {
 
     private static Part partToModify;
-
     private Alerts alert = new Alerts();
+
+    /**
+     * Connects all UI components ith @FXML tags
+     */
 
     @FXML
     private Button addPartButton;
@@ -46,6 +53,10 @@ public class HelloController implements Initializable {
     private TextField queryParts;
     @FXML
     private TextField queryProducts;
+
+    /**
+     * Navigation class separates navigation logic to a separate component
+     */
     @FXML
     private Navigation nav = new Navigation();
 
@@ -76,7 +87,7 @@ public class HelloController implements Initializable {
         populateTables();
     }
 
-    public HelloController() {
+    public MainController() {
     }
 
     @FXML
@@ -84,7 +95,9 @@ public class HelloController implements Initializable {
         nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/addpartF.fxml", event);
     }
 
-
+    /**
+     * Displays error message if no part selected then navigates to modifyPart
+     */
     @FXML
     protected void modifyPartClicked(ActionEvent event) throws IOException {
         if (PartTableView.getSelectionModel().getSelectedItem() == null) {
@@ -121,6 +134,9 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Displays error message if Product has parts associated with it
+     */
     @FXML
     protected void deleteProductClicked() {
         if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
@@ -142,6 +158,11 @@ public class HelloController implements Initializable {
     protected void exitProgram() {
         System.exit(0);
     }
+
+    /**
+     * FUTURE ENHANCEMENT - All search functions ie. getSearchResults & searchByPartName
+     * should be apart of their own class and not copy pasted through each screen that needs search functionality.
+     */
 
     @FXML
     protected void getSearchResultsForParts(ActionEvent event) throws IOException {
@@ -185,6 +206,9 @@ public class HelloController implements Initializable {
         return namedProducts;
     }
 
+    /**
+     * Sets up tables in mainForm
+     */
     private void populateTables() {
         PartTableView.setItems(Inventory.getAllParts());
         partID.setCellValueFactory(new PropertyValueFactory<>("id"));
