@@ -68,21 +68,46 @@ public class Inventory {
      * Probably named something else elsewhere.
      */
     public Part lookupPart(int partID) {
-        InHouse tmp = new InHouse(1,"blah", 14.4, 2, 4,5, 81);
-        return tmp;
+        if (!allParts.isEmpty()) {
+            for (int i = 0; i < allParts.size(); i++) {
+                if (allParts.get(i).getId() == partID) {
+                    return allParts.get(i);
+                }
+            }
+
+        }
+        return null;
     }
 
     public Product lookupProduct(int productId) {
-        Product tmp = new Product(1,"blah", 14.4, 2, 4,5);
-        return tmp;
+        if (!allProducts.isEmpty()) {
+            for (int i = 0; i < allProducts.size(); i++) {
+                if (allProducts.get(i).getId() == productId) {
+                    return allProducts.get(i);
+                }
+            }
+        }
+        return null;
     }
 
     public void updatePart(int index, Part selectedPart) {
-
+        for (int i = 0; i < allParts.size(); i++) {
+            if (allParts.get(i).getId() == selectedPart.getId()) {
+                allParts.set(i, selectedPart);
+                break;
+            }
+        }
+        return;
     }
 
     public void updateProduct(int index, Product selectedProduct) {
-
+        for (int i = 0; i < allProducts.size(); i++) {
+            if (allProducts.get(i).getId() == selectedProduct.getId()) {
+                allProducts.set(i, selectedProduct);
+                break;
+            }
+        }
+        return;
     }
 
     public ObservableList<Part> lookupPart(String partName) {

@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 /**
  * MainController is the controls all the business logic for the Home-screen
+ * Javadoc src/main/java/com/example/softwareic482/javaDoc
  */
 
 public class MainController implements Initializable {
@@ -111,9 +112,9 @@ public class MainController implements Initializable {
     @FXML
     protected void deletePartClicked() {
         if (PartTableView.getSelectionModel().getSelectedItem() == null) {
-            alert.showAlertMsg("part");
+            alert.showAlertDeleteMsg("part");
         } else {
-            if (alert.showconfirmationAlert()) {
+            if (alert.showconfirmationAlert("part")) {
                 PartTableView.getItems().removeAll(PartTableView.getSelectionModel().getSelectedItem());
             }
         }
@@ -140,13 +141,13 @@ public class MainController implements Initializable {
     @FXML
     protected void deleteProductClicked() {
         if (ProductTableView.getSelectionModel().getSelectedItem() == null) {
-            alert.showAlertMsg("product");
+            alert.showAlertDeleteMsg("product");
         } else {
            Product selectedProduct = ProductTableView.getSelectionModel().getSelectedItem();
            if (selectedProduct.getAllAssociatedParts().isEmpty() == false) {
                     alert.showAlertForAssociatedParts();
            } else {
-               if (alert.showconfirmationAlert()) {
+               if (alert.showconfirmationAlert("product")) {
                    ProductTableView.getItems().removeAll(selectedProduct);
                }
            }
@@ -160,7 +161,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * FUTURE ENHANCEMENT - All search functions ie. getSearchResults & searchByPartName
+     * FUTURE ENHANCEMENT - All search functions ie getSearchResults & searchByPartName
      * should be apart of their own class and not copy pasted through each screen that needs search functionality.
      */
 

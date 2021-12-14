@@ -28,6 +28,8 @@ public class ModifyProductController implements Initializable {
      * Holds associated parts for this product
      */
     private ObservableList<Part> assocParts = FXCollections.observableArrayList();
+    private int newParts = 0;
+
     private Alerts alert = new Alerts();
 
     @FXML
@@ -56,10 +58,10 @@ public class ModifyProductController implements Initializable {
      * Connects textfield to search functionality
      */
     @FXML
-    private TextField queryProducts;
+    private TextField queryParts;
 
     @FXML
-    private TableView<Product> ProductTableView;
+    private TableView<Part> PartsTableView;
     @FXML
     private TableColumn<Product,Integer> productID;
     @FXML
@@ -118,28 +120,15 @@ public class ModifyProductController implements Initializable {
         populateTables();
     }
 
-    private Part createPart(Product selectedPart) {
-        String toPartName = selectedPart.getName();
-        int toPartID = selectedPart.getId();
-        double toPriceName = selectedPart.getPrice();
-        int toStock = selectedPart.getStock();
-        int toMin = selectedPart.getMin();
-        int toMax = selectedPart.getMax();
-
-        InHouse assPartToBeAdded = new InHouse(toPartID,toPartName,toPriceName,toStock,toMin,toMax, toPartID);
-
-        return assPartToBeAdded;
-    }
-
     /**
      * Adds a new art to the associated parts list for this product
      */
     @FXML
     protected void addPart(ActionEvent event) throws IOException {
-        if(ProductTableView.getSelectionModel().getSelectedItem() != null) {
-            Product selectedPart = ProductTableView.getSelectionModel().getSelectedItem();
-            Part newPart = createPart(selectedPart);
-            assocParts.add(newPart);
+        if(PartsTableView.getSelectionModel().getSelectedItem() != null) {
+            Part selectedPart = PartsTableView.getSelectionModel().getSelectedItem();
+            assocParts.add(selectedPart);
+            newParts += 1;
             populateTables();
         } else {
             alert.showAlertMsg("part");
@@ -152,10 +141,10 @@ public class ModifyProductController implements Initializable {
     @FXML
     protected void removeAssociatedPart(ActionEvent event) throws IOException {
         if (AssociatedPartTableView.getSelectionModel().getSelectedItem() == null) {
-            alert.showAlertMsg("part");
+            alert.showAlertDeleteMsg("part");
         } else {
-            if (alert.showconfirmationAlert()) {
-                AssociatedPartTableView.getItems().removeAll(AssociatedPartTableView.getSelectionModel().getSelectedItem());
+            if (alert.showconfirmationAlert("part")) {
+                AssociatedPartTableView.getItems().remove(AssociatedPartTableView.getSelectionModel().getSelectedItem());
             }
         }
     }
@@ -195,29 +184,34 @@ public class ModifyProductController implements Initializable {
      * FUTURE ENHANCEMENT - should probably be in its own class
      */
     @FXML
-    protected void getSearchResultsForProducts(ActionEvent event) throws IOException {
-        String q = queryProducts.getText();
-        ObservableList<Product> product = searchbyProductName(q);
-        ProductTableView.setItems(product);
-        if (product.isEmpty()) {
+    protected void getSearchResultsForParts(ActionEvent event) throws IOException {
+        String q = queryParts.getText();
+        ObservableList<Part> parts = searchbyPartName(q);
+        PartsTableView.setItems(parts);
+        if (parts.isEmpty()) {
             alert.showAlertForSearch();
         }
     }
 
-    private ObservableList<Product> searchbyProductName(String partialName) {
-        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
-        for(Product pd : allProducts) {
-            if(pd.getName().contains(partialName) || String.valueOf(pd.getId()).contains(partialName)) {
-                namedProducts.add(pd);
+    private ObservableList<Part> searchbyPartName(String partialName) {
+        ObservableList<Part> namedParts = FXCollections.observableArrayList();
+        ObservableList<Part> allParts = Inventory.getAllParts();
+        for(Part pt : allParts) {
+            if(pt.getName().contains(partialName) || String.valueOf(pt.getId()).contains(partialName)) {
+                namedParts.add(pt);
             }
         }
-        return namedProducts;
+        return namedParts;
     }
 
     @FXML
     protected void cancel(ActionEvent event) throws IOException {
-        nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
+        if (alert.showconfirmationCancelAlert()) {
+            for (int i = 0; i < newParts; i++) {
+                assocParts.remove(assocParts.size() - 1);
+            }
+            nav.sceneToGoTo("src/main/java/com/example/softwareic482/views/mainForm.fxml", event);
+        }
     }
 
     /**
@@ -225,7 +219,7 @@ public class ModifyProductController implements Initializable {
      * could have params to pass in the table and list of components to setValues for.
      */
     private void populateTables() {
-        ProductTableView.setItems(Inventory.getAllProducts());
+        PartsTableView.setItems(Inventory.getAllParts());
         productID.setCellValueFactory(new PropertyValueFactory<>("id"));
         productName.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));

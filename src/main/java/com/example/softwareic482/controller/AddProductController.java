@@ -50,10 +50,10 @@ public class AddProductController implements Initializable {
     private TextField productMin;
 
     @FXML
-    private TextField queryProducts;
+    private TextField queryParts;
 
     @FXML
-    private TableView<Product> ProductTableView;
+    private TableView<Part> PartTableView;
     @FXML
     private TableColumn<Product,Integer> productID;
     @FXML
@@ -111,10 +111,9 @@ public class AddProductController implements Initializable {
      */
     @FXML
     protected void addPart(ActionEvent event) throws IOException {
-        if(ProductTableView.getSelectionModel().getSelectedItem() != null) {
-            Product selectedProduct = ProductTableView.getSelectionModel().getSelectedItem();
-            Part newPart = createPart(selectedProduct);
-            assocParts.add(newPart);
+        if(PartTableView.getSelectionModel().getSelectedItem() != null) {
+            Part selectedPart = PartTableView.getSelectionModel().getSelectedItem();
+            assocParts.add(selectedPart);
             AssociatedPartsTableView.setItems(assocParts);
         } else {
             alert.showAlertMsg("part");
@@ -125,11 +124,11 @@ public class AddProductController implements Initializable {
      * removes an associated part
      */
     @FXML
-    protected void removeAssociatedProduct(ActionEvent event) throws IOException {
+    protected void removeAssociatedPart(ActionEvent event) throws IOException {
         if (AssociatedPartsTableView.getSelectionModel().getSelectedItem() == null) {
-            alert.showAlertMsg("part");
+            alert.showAlertDeleteMsg("part");
         } else {
-            AssociatedPartsTableView.getItems().removeAll(AssociatedPartsTableView.getSelectionModel().getSelectedItem());
+            AssociatedPartsTableView.getItems().remove(AssociatedPartsTableView.getSelectionModel().getSelectedItem());
         }
     }
 
@@ -174,7 +173,7 @@ public class AddProductController implements Initializable {
      * FUTURE ENHANCEMENT - All methods below this line should probably be in their own appropriate class
      */
     private void populateTables() {
-        ProductTableView.setItems(Inventory.getAllProducts());
+        PartTableView.setItems(Inventory.getAllParts());
         productID.setCellValueFactory(new PropertyValueFactory<>("id"));
         productName.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevel.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -187,23 +186,23 @@ public class AddProductController implements Initializable {
     }
 
     @FXML
-    protected void getSearchResultsForProducts(ActionEvent event) throws IOException {
-        String q = queryProducts.getText();
-        ObservableList<Product> product = searchbyProductName(q);
-        ProductTableView.setItems(product);
-        if (product.isEmpty()) {
+    protected void getSearchResultsForParts(ActionEvent event) throws IOException {
+        String q = queryParts.getText();
+        ObservableList<Part> parts = searchbyPartName(q);
+        PartTableView.setItems(parts);
+        if (parts.isEmpty()) {
             alert.showAlertForSearch();
         }
     }
 
-    private ObservableList<Product> searchbyProductName(String partialName) {
-        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
-        for(Product pd : allProducts) {
-            if(pd.getName().contains(partialName) || String.valueOf(pd.getId()).contains(partialName)) {
-                namedProducts.add(pd);
+    private ObservableList<Part> searchbyPartName(String partialName) {
+        ObservableList<Part> namedParts = FXCollections.observableArrayList();
+        ObservableList<Part> allParts = Inventory.getAllParts();
+        for(Part pt : allParts) {
+            if(pt.getName().contains(partialName) || String.valueOf(pt.getId()).contains(partialName)) {
+                namedParts.add(pt);
             }
         }
-        return namedProducts;
+        return namedParts;
     }
 }

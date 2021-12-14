@@ -23,7 +23,13 @@ public class Alerts {
 
     public void showAlertMsg(String item) {
         alert.setTitle("Error");
-        alert.setContentText("Please choose a %s to add.".formatted(item));;
+        alert.setContentText("Please choose " + item + " to add.");
+        alert.showAndWait();
+    }
+
+    public void showAlertDeleteMsg(String item) {
+        alert.setTitle("Error");
+        alert.setContentText("Please choose " + item + " to delete.");
         alert.showAndWait();
     }
 
@@ -50,13 +56,13 @@ public class Alerts {
 
     public void showAlertModifyMsg(String item) {
         alert.setTitle("Error");
-        alert.setContentText("Please choose a %s to modify.".formatted(item));;
+        alert.setContentText("Please choose a %s to modify.".format(item));
         alert.showAndWait();
     }
 
-    public boolean showconfirmationAlert() {
+    public boolean showconfirmationAlert(String item) {
         alert.setTitle("Alert");
-        alert.setContentText("Delete this Part?");
+        alert.setContentText("Delete this " + item + "?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             return true;

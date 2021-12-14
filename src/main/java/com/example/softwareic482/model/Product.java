@@ -104,4 +104,8 @@ public class Product {
     public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
     }
+
+    public void setAllAssociatedParts(ObservableList<Part> listOfParts) {
+        this.associatedParts = listOfParts;
+    }
 }

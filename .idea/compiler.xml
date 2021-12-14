@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SOFTWARE I - C482" target="16" />
+      <module name="SOFTWARE I - C482" target="11.0.13" />
     </bytecodeTargetLevel>
   </component>
 </project>
